@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:#000000">
+<div id="canvas">
+<canvas id="myCanvas" width="300" height="500" style="border-left:0px solid white">
+
+</canvas>
+</div>
+<div id="form">
+<form>
+<input type="button" value="Go" onclick="go()"/>
+
+</form>
+</div>
+<script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
+<script type="text/javascript">
+
+var c=document.getElementById("myCanvas");
+ var ctx=c.getContext("2d");
+ ctx.beginPath();
+
+
+ ctx.moveTo(0,c.height/2)
+ ctx.lineTo(c.width,c.height/2)
+  ctx.strokeStyle="rgba(255,255,255,0.3)";
+ ctx.stroke();
+ 
+  ctx.moveTo(0,c.height/2)
+ ctx.closePath();
+ 
+ 
+function go() {
+
+ var start = (new Date).getTime();
+ var xpos=0;
+ var watchID = null; 
+ startWatch();
+ 
+ 
+ 
+    // Start watching the acceleration 
+    function startWatch() { 
+        // Update acceleration every 0.1 seconds 
+        var options = { frequency: 300 }; 
+        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options); 
+    } 
+ 
+    // Stop watching the acceleration 
+    function stopWatch() { 
+        if (watchID) { 
+            navigator.accelerometer.clearWatch(watchID); 
+            watchID = null; 
+        } 
+    } 
+ 
+    // onSuccess: Get a snapshot of the current acceleration 
+    function onSuccess(acceleration) { 
+    var currTime = (new Date).getTime();
+    var timeGone = currTime-start;	
+     ctx.clearRect(xpos+10,0,300,c.height);
+ ctx.beginPath();
+   ctx.moveTo(xpos,xaccel);
+    xpos = timeGone/100;
+     
+     
+     
+    var xaccel = acceleration.x*25;
+    ctx.lineTo(xpos,c.height/2+xaccel);
+ 	ctx.strokeStyle="rgba(255,255,50,0.6)";
+ 	ctx.closePath();
+        ctx.stroke();
+      
+        
+   
+    
+    if(xpos>=300-5)
+    	{
+    		ctx.moveTo(0,c.height/2);
+    		start = (new Date).getTime();
+    		
+    	}
+    	
+	
+    
+    } 
+ 
+    // onError: Failed to get the acceleration 
+    function onError() { 
+        alert('Error!'); 
+    } 
+ 
+        
+    
+}
+</script>
+
+</body>
+</html>
+
