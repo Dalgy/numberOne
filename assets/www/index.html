@@ -57,8 +57,9 @@ function go() {
     function onSuccess(acceleration) { 
     var currTime = (new Date).getTime();
     var timeGone = currTime-start;	
+    ctx.beginPath();
      ctx.clearRect(xpos+10,0,300,c.height);
- ctx.beginPath();
+ 
    ctx.moveTo(xpos,xaccel);
     xpos = timeGone/100;
      
@@ -67,9 +68,9 @@ function go() {
     var xaccel = acceleration.x*25;
     ctx.lineTo(xpos,c.height/2+xaccel);
  	ctx.strokeStyle="rgba(255,255,50,0.6)";
- 	ctx.closePath();
+ 	
         ctx.stroke();
-      
+      ctx.closePath();
         
    
     
